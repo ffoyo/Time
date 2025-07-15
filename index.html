@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Unblur Reveal</title>
+  <style>
+    body {
+      margin: 0;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    img {
+      width: 500px;
+      transition: filter 1s linear;
+    }
+  </style>
+</head>
+<body>
+  <img id="meme" src="image.jpeg" alt="scheming emoji" />
+
+  <script>
+    const img = document.getElementById("meme");
+
+    function updateBlur() {
+      const now = new Date();
+      const tomorrow = new Date();
+      tomorrow.setDate(now.getDate() + 1);
+      tomorrow.setHours(5, 45, 0, 0);
+
+      const start = new Date(tomorrow.getTime() - 7 * 60 * 60 * 1000); // 7 hours before
+      const end = tomorrow;
+      const total = end - start;
+      const elapsed = now - start;
+      const percent = Math.min(Math.max(elapsed / total, 0), 1);
+
+      const maxBlur = 30; // starting blur in px
+      const blur = (1 - percent) * maxBlur;
+      img.style.filter = `blur(${blur}px)`;
+    }
+
+    updateBlur();
+    setInterval(updateBlur, 60000); // Update every minute
+  </script>
+</body>
+</html>
